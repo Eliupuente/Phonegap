@@ -1,77 +1,63 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-type" content="text/html;
-charset=utf-8">
-<meta name="viewport" id="viewport"
-content="width=device-width, height=device-height,
-initial-scale=1.0, maximum-scale=1.0,
-user-scalable=no;" />
-<script type="text/javascript" charset="utf-8"
-src="phonegap.js"></script>
-<script type="text/javascript" charset="utf-8">
+// Initialize your app
+var myApp = new Framework7();
 
-ptg8126969
+// Export selectors engine
+var $$ = Dom7;
 
-160 CHApter 10 ACCelerometer
+// Add view
+var mainView = myApp.addView('.view-main', {
+    // Because we use fixed-through navbar we can enable dynamic navbar
+    dynamicNavbar: true
+});
 
-//Accelerometer content
-var ac;
-//PhoneGap Ready variable
-var pgr = false;
-function onBodyLoad() {
-document.addEventListener("deviceready", onDeviceReady,
-false);
-}
-function onDeviceReady() {
-//Get a handle we'll use to adjust the accelerometer
-//content
-ac = document.getElementById('accelInfo');
-//Set the variable that lets other parts of the program
-//know that PhoneGap is initialized
-pgr = true;
-}
-function getAcceleration() {
-if (pgr == true) {
-//Clear the current orientation
-ac.innerHTML = "";
-//get the current orientation
-navigator.accelerometer.getCurrentAcceleration(
-onAccelSuccess, onAccelFailure);
-} else {
-alert("Please wait,\nPhoneGap is not ready.");
-}
-}
-function onAccelSuccess(accel) {
-//We received something from the API, so...
-//first get the timestamp in a date object
-//so we can work with it
-var d = new Date(accel.timestamp);
-//Then replace the page's content with the
-//current acceleration retrieved from the API
-ac.innerHTML = "<b>Current acceleration</b><hr />X: " +
-accel.x + "<br />Y: " + accel.y + "<br />Z: " +
-accel.z + "<br />Timestamp: " + d.toLocaleString() +
-"<hr />Click the button to refresh.";
-}
-function onAccelFailure() {
-alert("Accelerometer error!");
-}
-</script>
+// Callbacks to run specific code for specific pages, for example for About page:
+myApp.onPageInit('about', function (page) {
+    // run createContentPage func after link was clicked
+    $$('.create-page').on('click', function () {
+        createContentPage();
+    });
+});
 
-ptg8126969
+// Generate dynamic page
+var dynamicPageIndex = 0;
+function createContentPage() {
+	mainView.router.loadContent(
+        '<!-- Top Navbar-->' +
+        '<div class="navbar">' +
+        '  <div class="navbar-inner">' +
+        '    <div class="left"><a href="#" class="back link"><i class="icon icon-back"></i><span>Back</span></a></div>' +
+        '    <div class="center sliding">Dynamic Page ' + (++dynamicPageIndex) + '</div>' +
+        '  </div>' +
+        '</div>' +
+        '<div class="pages">' +
+        '  <!-- Page, data-page contains page name-->' +
+        '  <div data-page="dynamic-pages" class="page">' +
+        '    <!-- Scrollable page content-->' +
+        '    <div class="page-content">' +
+        '      <div class="content-block">' +
+        '        <div class="content-block-inner">' +
+        '          <p>Here is a dynamic page created on ' + new Date() + ' !</p>' +
+        '          <p>Go <a href="#" class="back">back</a> or go to <a href="services.html">Services</a>.</p>' +
+        '        </div>' +
+        '      </div>' +
+        '    </div>' +
+        '  </div>' +
+        '</div>'
+    );
+	return;
+}
 
-Querying deviCe orientAtion 161
+// onSuccess: Obtiene el resultado
+//
+function onSuccess(acceleration) {
+    alert('Aceleration X: '  + acceleration.x + '\n' +
+          'Aceleration Y: '  + acceleration.y + '\n' +
+          'Aceleration Z: '  + acceleration.z + '\n' +
+          'Timestamp: '      + acceleration.timestamp + '\n');
+}
 
-</head>
-<body onload="onBodyLoad()">
-<h1>Example 10-1</h1>
-<p>This is a PhoneGap application that measures
-Device acceleration using the Accelerometer API.</p>
-<p><input type="button"
-value="Refresh Orientation" onclick="getAcceleration();">
-</p>
-<p id="accelInfo">Nothing to see here (yet),
-click the button.</p>
-</body>
-</html>
+// onError: Ocurrio un error
+//
+function onError() {
+    alert('onError!');
+}
