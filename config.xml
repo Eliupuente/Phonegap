@@ -15,7 +15,7 @@
   <plugin name="cordova-plugin-device"/>
   <plugin name="cordova-plugin-camera"/>
   <plugin name="cordova-plugin-audioinput"/>
-  <plugin name="cordova-plugin-capture"/>
+  <plugin name="cordova-plugin-mediacapture"/>
   <access origin="*" />
   <allow-intent href="http://*/*" />
   <allow-intent href="https://*/*" />
