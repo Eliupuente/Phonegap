@@ -1,20 +1,21 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="io.cordova.jquery" version="1.3.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="io.cordova.contacto" version="1.5.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
 <preference name="phonegap-version" value="cli-9.0.0" />
-  <name>Aplicacion 8</name>
+  <name>Contactos</name>
   <description>
-      Esta es una App de PhoneGap Hola Mundo ft jquery
+      App de Contactos en phonegap
   </description>
-  <author email="Juan Eliu Gonzalez Puente" href="http://cordova.io">
-      Juan Eliu Gonzalez Puente
+  <author email="luis_e_garcia_C@hotmail.com" href="http://cordova.io">
+      Juan Eliu Gonzalez Puente & Eder Adrain Carrillo Robles
   </author>
   <content src="index.html" />
   <plugin name="cordova-plugin-whitelist" spec="1.3.4" />
-  <plugin name="cordova-plugin-device-motion" spce="1"/>
   <plugin name="cordova-plugin-dialogs"/> 
   <plugin name="cordova-plugin-device"/>
   <plugin name="cordova-plugin-camera"/>
-  <plugin name="cordova-plugin-mediacapture"/>
+  <plugin name="cordova-plugin-media-capture"/>
+  <plugin name="cordova-plugin-device-motion"/>
+  <plugin name="cordova-plugin-contacts"/>
   <access origin="*" />
   <allow-intent href="http://*/*" />
   <allow-intent href="https://*/*" />
