@@ -1,65 +1,36 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Contact Example</title>
-
-    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
-    <script type="text/javascript" charset="utf-8">
-    document.getElementById("createContact").addEventListener("click", createContact);
-    document.getElementById("findContact").addEventListener("click", findContact);
-    document.getElementById("deleteContact").addEventListener("click", deleteContact);
-    // Wait for device API libraries to load
-    //
-    function createContact() {
-   var myContact = navigator.contacts.create({"displayName": "Test User"});
-   myContact.save(contactSuccess, contactError);
-    
-   function contactSuccess() {
-      alert("Contact is saved!");
-   }
-	
-   function contactError(message) {
-      alert('Failed because: ' + message);
-   }
-	
-}
-function findContacts() {
-   var options = new ContactFindOptions();
-   options.filter = "";
-   options.multiple = true;
-   fields = ["displayName"];
-   navigator.contacts.find(fields, contactfindSuccess, contactfindError, options);
-    
-   function contactfindSuccess(contacts) {
-      for (var i = 0; i < contacts.length; i++) {
-         alert("Display Name = " + contacts[i].displayName);
-      }
-   }
-	
-   function contactfindError(message) {
-      alert('Failed because: ' + message);
-   }
-	
-}
-    function onBodyLoad() {
-        //alert("onBodyLoad");
-        document.addEventListener("deviceready", onDeviceReady, false);
-}
-    // device APIs are available
-    //
-    function onDeviceReady() {
-        var myContact = navigator.contacts.create({"displayName": "Test User"});
-        myContact.note = "This contact has a note.";
-        alert("The contact, " + myContact.displayName + ", note: " + myContact.note);
-    }
-    </script>
-  </head>
-<body onload="onBodyLoad()">
-    <h1>Example</h1>
-    <p>Create Contact</p>
-    <button onclick="onBodyLoad()">Contacto</button>
-    <button id = "createContact">ADD CONTACT</button>
-    <button id = "findContact">FIND CONTACT</button>
-    <button id = "deleteContact">DELETE CONTACT</button>
-  </body>
+<!DOCTYPE HTML>  
+<html>  
+<head>  
+<title>Contacts</title>  
+<script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
+<script type="text/javascript" charset="utf-8">
+function onDeviceReady(){  
+    var options = new ContactFindOptions();   
+    options.filter="";  
+    options.multiple=true;   
+    var fields = ["phoneNumbers", "name"];   
+    navigator.contacts.find(fields, onSuccess, onError, options);  
+}   
+function onSuccess(contacts) {  
+    var ul = document.getElementById("contactList");   
+    for(var index=0;index<contacts.length;index++) {  
+        var name = contacts[index].name.formatted;   
+        var phoneNumber = contacts[index].phoneNumbers[0].value;   
+        var li = document.createElement('li');   
+        li.innerHTML = "<a href=\"tel://"+phoneNumber+"\">"+name+"</a>";   
+        ul.appendChild(li);  
+    }  
+};   
+function onError() {  
+    alert('onError!');  
+};  
+function init(){  
+    document.addEventListener("deviceready", onDeviceReady, false);  
+}   
+</script>  
+</head>  
+<body onLoad="init()">  
+    <h1>Hola amigos. Esta es mi agenda actual:</h1>  
+    <ul id="contactList"></ul>  
+</body>  
 </html>
